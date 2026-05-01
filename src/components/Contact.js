@@ -5,6 +5,39 @@ import { FiMail, FiUser, FiMessageSquare, FiSend, FiGithub, FiLinkedin, FiFacebo
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    const formData = new FormData(e.target);
+    formData.append("_captcha", "false");
+    formData.append("_subject", "New Contact Message from Portfolio!");
+    formData.append("_template", "table");
+
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/shohanur.rs.bd@gmail.com", {
+        method: "POST",
+        body: formData,
+      });
+      
+      const responseData = await res.json();
+
+      if (res.ok && responseData.success === "true") {
+        setIsSubmitted(true);
+        setTimeout(() => setIsSubmitted(false), 5000);
+        e.target.reset();
+      } else {
+        alert("Failed to send message. Please check if FormSubmit is activated.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section id="contact" className="py-20 relative">
@@ -75,14 +108,9 @@ export default function Contact() {
             className="lg:w-2/3"
           >
             <form 
-              action="https://formsubmit.co/shohanur.rs.bd@gmail.com" 
-              method="POST"
-              onSubmit={() => setIsSubmitting(true)}
+              onSubmit={handleSubmit}
               className="glass-card p-8 md:p-10 rounded-2xl border-t border-cyan-500/30 shadow-[0_10px_30px_rgba(6,182,212,0.1)] flex flex-col gap-6"
             >
-              <input type="hidden" name="_next" value="http://localhost:3000" />
-              <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_subject" value="New Contact Message from Portfolio!" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
@@ -125,13 +153,17 @@ export default function Contact() {
 
               <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || isSubmitted}
                 className="group relative w-full flex justify-center py-4 px-4 border border-transparent rounded-xl text-white bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 font-semibold shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] transition-all overflow-hidden disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 <div className="absolute inset-0 w-full h-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <span className="flex items-center gap-2 relative z-10">
                   {isSubmitting ? (
                     "Sending..."
+                  ) : isSubmitted ? (
+                    <>
+                      <FiCheck /> Message Sent Successfully!
+                    </>
                   ) : (
                     <>
                       <FiSend className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />

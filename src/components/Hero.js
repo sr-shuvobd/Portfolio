@@ -157,7 +157,7 @@ export default function Hero() {
             transition={{ duration: 0.8, type: "spring" }}
             className="lg:w-1/2 flex justify-center perspective-1000"
           >
-            <div className="relative w-full max-w-lg h-[400px] flex items-center justify-center">
+            <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg aspect-square md:aspect-auto md:h-[400px] flex items-center justify-center mt-8 lg:mt-0 mx-auto">
               <AnimatePresence mode="wait">
                 {showImage ? (
                   <motion.div

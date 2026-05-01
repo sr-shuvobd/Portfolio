@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FiMail, FiUser, FiMessageSquare, FiSend, FiGithub, FiLinkedin, FiFacebook, FiCheck } from "react-icons/fi";
+import toast from "react-hot-toast";
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,14 +27,18 @@ export default function Contact() {
 
       if (res.ok && responseData.success === "true") {
         setIsSubmitted(true);
-        setTimeout(() => setIsSubmitted(false), 5000);
+        toast.success("Message sent successfully! Redirecting to Home...");
+        setTimeout(() => {
+          setIsSubmitted(false);
+          window.location.hash = "#home";
+        }, 2500);
         e.target.reset();
       } else {
-        alert("Failed to send message. Please check if FormSubmit is activated.");
+        toast.error("Failed to send message. Please check if FormSubmit is activated.");
       }
     } catch (error) {
       console.error(error);
-      alert("An error occurred. Please try again later.");
+      toast.error("An error occurred. Please try again later.");
     } finally {
       setIsSubmitting(false);
     }

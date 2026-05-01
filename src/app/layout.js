@@ -9,10 +9,19 @@ export const metadata = {
   keywords: ["MERN Stack", "Developer", "Portfolio", "MD Shohanur Rahman", "React", "Next.js", "Node.js"],
 };
 
+import { Toaster } from "react-hot-toast";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} bg-background text-white antialiased`}>
+        <Toaster position="bottom-right" toastOptions={{ 
+          style: { 
+            background: '#1e293b', 
+            color: '#fff',
+            border: '1px solid rgba(6,182,212,0.3)',
+          } 
+        }} />
         {children}
       </body>
     </html>

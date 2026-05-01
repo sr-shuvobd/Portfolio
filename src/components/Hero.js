@@ -152,12 +152,13 @@ export default function Hero() {
 
           {/* Image/Illustration - Glass Terminal */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, rotateX: 15 }}
-            animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, type: "spring" }}
-            className="lg:w-1/2 flex justify-center perspective-1000"
+            className="lg:w-1/2 flex justify-center"
+            style={{ perspective: "1200px" }}
           >
-            <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg h-[320px] sm:h-[350px] md:h-[400px] flex items-center justify-center mt-12 md:mt-8 lg:mt-0 mx-auto">
+            <div className="relative w-[280px] xs:w-[320px] sm:w-[400px] md:w-full max-w-lg h-[300px] sm:h-[350px] md:h-[400px] flex items-center justify-center mt-20 md:mt-8 lg:mt-0 mx-auto">
               <AnimatePresence mode="wait">
                 {showImage ? (
                   <motion.div

@@ -14,20 +14,28 @@ const roles = [
 
 export default function Hero() {
   const [currentRole, setCurrentRole] = useState(0);
-  const [showImage, setShowImage] = useState(false);
+  const [showImage, setShowImage] = useState(true);
 
   useEffect(() => {
     const roleInterval = setInterval(() => {
       setCurrentRole((prev) => (prev + 1) % roles.length);
     }, 3000);
     
-    const slideInterval = setInterval(() => {
-      setShowImage((prev) => !prev);
-    }, 6000);
+    let timeoutId;
+    const scheduleNext = (isCurrentlyImage) => {
+      // If image is showing, wait 8 seconds before switching to code.
+      // If code is showing, wait 4 seconds before switching to image.
+      timeoutId = setTimeout(() => {
+        setShowImage(!isCurrentlyImage);
+        scheduleNext(!isCurrentlyImage);
+      }, isCurrentlyImage ? 8000 : 4000);
+    };
+    
+    scheduleNext(true);
 
     return () => {
       clearInterval(roleInterval);
-      clearInterval(slideInterval);
+      clearTimeout(timeoutId);
     };
   }, []);
 

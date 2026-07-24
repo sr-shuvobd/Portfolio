@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -16,12 +18,14 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
 
-      // Highlight active section
+      if (pathname !== "/") return; // Only highlight sections on home page
+
       const sections = navLinks.map((link) => link.name.toLowerCase());
       const scrollPosition = window.scrollY + 200;
 
@@ -39,7 +43,7 @@ export default function Navbar() {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [pathname]);
 
   return (
     <header
@@ -50,17 +54,17 @@ export default function Navbar() {
       <div 
         className={`flex items-center justify-between transition-all duration-500 ${
           scrolled 
-            ? "w-[90%] max-w-4xl glass-card rounded-full px-6 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.3)] border-gray-700/50 bg-[#0f172a]/70 backdrop-blur-xl" 
+            ? "w-[90%] max-w-4xl glass-card rounded-full px-6 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.3)] border-slate-700/50 bg-[#0f172a]/70 backdrop-blur-xl" 
             : "w-full container mx-auto px-6 md:px-12 py-2"
         }`}
       >
         {/* Logo */}
         <motion.a
-          href="#home"
+          href="/#home"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-2xl font-bold text-gradient tracking-tight"
+          className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 tracking-tight"
         >
           MD Shohanur
         </motion.a>
@@ -68,16 +72,15 @@ export default function Navbar() {
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-2">
           {navLinks.map((link, index) => {
-            const isActive = activeSection === link.name.toLowerCase();
+            const isActive = pathname === "/" && activeSection === link.name.toLowerCase();
+            const linkHref = pathname === "/" ? link.href : `/${link.href}`;
+
             return (
-              <motion.a
+              <Link
                 key={link.name}
-                href={link.href}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                href={linkHref}
                 className={`relative px-4 py-2 text-sm font-medium transition-colors rounded-full ${
-                  isActive ? "text-white" : "text-gray-300 hover:text-white"
+                  isActive ? "text-white" : "text-slate-300 hover:text-white"
                 }`}
               >
                 {isActive && (
@@ -88,7 +91,7 @@ export default function Navbar() {
                   />
                 )}
                 <span className="relative z-10">{link.name}</span>
-              </motion.a>
+              </Link>
             );
           })}
         </nav>
@@ -97,7 +100,7 @@ export default function Navbar() {
         <div className="md:hidden">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="text-gray-300 hover:text-white focus:outline-none"
+            className="text-slate-300 hover:text-white focus:outline-none"
           >
             {isOpen ? <FiX size={28} /> : <FiMenu size={28} />}
           </button>
@@ -112,22 +115,27 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden absolute top-24 left-1/2 -translate-x-1/2 w-[90%] glass-card rounded-2xl border border-gray-700 py-6 flex flex-col items-center gap-6 shadow-2xl z-40 bg-[#0f172a]/95 backdrop-blur-3xl"
+            className="md:hidden absolute top-24 left-1/2 -translate-x-1/2 w-[90%] glass-card rounded-2xl border border-slate-700 py-6 flex flex-col items-center gap-4 shadow-2xl z-40 bg-[#0f172a]/95 backdrop-blur-3xl"
           >
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className={`text-lg font-medium px-6 py-2 rounded-full w-3/4 text-center transition-all ${
-                  activeSection === link.name.toLowerCase()
-                    ? "bg-gradient-to-r from-purple-600/30 to-cyan-600/30 border border-cyan-500/30 text-white shadow-[0_0_15px_rgba(6,182,212,0.2)]"
-                    : "text-gray-300 hover:bg-white/5"
-                }`}
-              >
-                {link.name}
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = pathname === "/" && activeSection === link.name.toLowerCase();
+              const linkHref = pathname === "/" ? link.href : `/${link.href}`;
+
+              return (
+                <Link
+                  key={link.name}
+                  href={linkHref}
+                  onClick={() => setIsOpen(false)}
+                  className={`text-base font-semibold px-6 py-2.5 rounded-full w-3/4 text-center transition-all ${
+                    isActive
+                      ? "bg-gradient-to-r from-purple-600/30 to-cyan-600/30 border border-cyan-500/30 text-white shadow-[0_0_15px_rgba(6,182,212,0.2)]"
+                      : "text-slate-300 hover:bg-white/5"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </motion.div>
         )}
       </AnimatePresence>

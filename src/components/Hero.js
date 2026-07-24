@@ -1,15 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiGithub, FiLinkedin, FiFacebook, FiDownload, FiMail } from "react-icons/fi";
+import { FiGithub, FiLinkedin, FiFacebook, FiMail, FiArrowDownRight, FiCode, FiTerminal } from "react-icons/fi";
 import Image from "next/image";
 import myImage from "@/assets/my.jpeg";
 
 const roles = [
   "MERN Stack Developer",
-  "Competitive Programmer",
-  "React.js Specialist",
-  "UI/UX Enthusiast",
+  "React.js & Next.js Specialist",
+  "Competitive Programmer (2★)",
+  "Full-Stack Web Engineer",
 ];
 
 export default function Hero() {
@@ -23,12 +23,10 @@ export default function Hero() {
     
     let timeoutId;
     const scheduleNext = (isCurrentlyImage) => {
-      // If image is showing, wait 8 seconds before switching to code.
-      // If code is showing, wait 4 seconds before switching to image.
       timeoutId = setTimeout(() => {
         setShowImage(!isCurrentlyImage);
         scheduleNext(!isCurrentlyImage);
-      }, isCurrentlyImage ? 8000 : 4000);
+      }, isCurrentlyImage ? 9000 : 4500);
     };
     
     scheduleNext(true);
@@ -42,48 +40,51 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden bg-slate-950"
     >
-      {/* Background blobs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full mix-blend-screen filter blur-[120px] animate-blob z-0"></div>
-      <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-cyan-600/20 rounded-full mix-blend-screen filter blur-[120px] animate-blob animation-delay-2000 z-0"></div>
-      <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-emerald-600/20 rounded-full mix-blend-screen filter blur-[120px] animate-blob animation-delay-4000 z-0"></div>
+      {/* Dynamic Background Blobs */}
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-purple-600/15 rounded-full mix-blend-screen filter blur-[140px] animate-blob pointer-events-none z-0"></div>
+      <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-cyan-600/15 rounded-full mix-blend-screen filter blur-[140px] animate-blob animation-delay-2000 pointer-events-none z-0"></div>
+      <div className="absolute bottom-1/4 left-1/3 w-[500px] h-[500px] bg-emerald-600/15 rounded-full mix-blend-screen filter blur-[140px] animate-blob animation-delay-4000 pointer-events-none z-0"></div>
 
-      {/* Grid Pattern Overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] z-0"></div>
+      {/* Grid Overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:30px_30px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] pointer-events-none z-0"></div>
 
       <div className="container mx-auto px-6 md:px-12 relative z-10">
-        <div className="flex flex-col-reverse lg:flex-row items-center gap-12">
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-16">
           
           {/* Text Content */}
           <div className="lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left">
+            
+            {/* Animated Role Badge */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-block px-4 py-1.5 mb-6 rounded-full glass-card text-cyan-400 text-sm font-semibold tracking-wider border border-cyan-500/30 overflow-hidden relative"
+              className="inline-block px-4 py-2 mb-6 rounded-full glass-card text-cyan-400 text-xs sm:text-sm font-semibold tracking-wider border border-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.2)] overflow-hidden relative"
             >
-              <div className="flex h-5 items-center justify-center min-w-[200px]">
+              <div className="flex h-6 items-center justify-center min-w-[220px] sm:min-w-[260px]">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={currentRole}
-                    initial={{ y: 20, opacity: 0 }}
+                    initial={{ y: 25, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -20, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute"
+                    exit={{ y: -25, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                    className="absolute font-mono"
                   >
-                    {roles[currentRole]}
+                    ⚡ {roles[currentRole]}
                   </motion.span>
                 </AnimatePresence>
               </div>
             </motion.div>
 
+            {/* Heading */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-5xl md:text-7xl font-bold mb-6 leading-[1.1] tracking-tight"
+              className="text-4xl sm:text-6xl lg:text-7xl font-extrabold mb-6 leading-[1.1] tracking-tight text-white"
             >
               Hi, I&apos;m <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-400 to-emerald-400 animate-gradient-x">
@@ -95,11 +96,12 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-gray-400 text-lg md:text-xl mb-8 max-w-lg"
+              className="text-slate-300 text-base sm:text-lg lg:text-xl mb-9 max-w-xl leading-relaxed"
             >
-              I build modern, responsive, and scalable web applications using the MERN stack.
+              Building modern, high-performance, and scalable web applications using <strong className="text-cyan-400 font-semibold">Next.js 16</strong>, <strong className="text-purple-400 font-semibold">React 19</strong>, and the <strong className="text-emerald-400 font-semibold">MERN Stack</strong>.
             </motion.p>
 
+            {/* Action Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -110,47 +112,50 @@ export default function Hero() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 href="#projects"
-                className="px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-semibold shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(139,92,246,0.6)] transition-shadow"
+                className="px-8 py-3.5 rounded-full bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 text-white font-semibold text-sm shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:shadow-[0_0_35px_rgba(139,92,246,0.6)] transition-all flex items-center gap-2"
               >
-                View Projects
+                View Projects <FiArrowDownRight className="text-lg" />
               </motion.a>
+
               <motion.a
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 href="#contact"
-                className="px-8 py-3 rounded-full glass-card text-white font-semibold flex items-center gap-2 hover:bg-white/10 transition-colors border border-gray-600 hover:border-cyan-400"
+                className="px-8 py-3.5 rounded-full glass-card text-white font-semibold text-sm flex items-center gap-2 hover:bg-slate-800/60 border border-slate-700 hover:border-cyan-400 transition-all shadow-lg"
               >
-                <FiMail /> Contact Me
+                <FiMail className="text-cyan-400" /> Contact Me
               </motion.a>
             </motion.div>
 
+            {/* Social Icons */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="flex gap-6 mt-10"
+              className="flex gap-4 mt-10 items-center"
             >
               {[
-                { icon: <FiGithub size={24} />, href: "https://github.com/sr-shuvobd" },
-                { icon: <FiLinkedin size={24} />, href: "https://www.linkedin.com/in/shohanur-rahman-bd/" },
-                { icon: <FiFacebook size={24} />, href: "https://www.facebook.com/shohanur.rs" },
+                { icon: <FiGithub size={22} />, href: "https://github.com/sr-shuvobd", label: "GitHub" },
+                { icon: <FiLinkedin size={22} />, href: "https://www.linkedin.com/in/shohanur-rahman-bd/", label: "LinkedIn" },
+                { icon: <FiFacebook size={22} />, href: "https://www.facebook.com/shohanur.rs", label: "Facebook" },
               ].map((social, index) => (
                 <motion.a
                   key={index}
-                  whileHover={{ y: -5, scale: 1.1, color: "#22d3ee" }}
+                  whileHover={{ y: -4, scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 transition-colors relative group"
+                  aria-label={social.label}
+                  className="w-11 h-11 rounded-2xl glass-card border border-slate-800 flex items-center justify-center text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-cyan-950/30 transition-all shadow-md"
                 >
-                  <span className="absolute inset-0 bg-cyan-400/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                  <span className="relative z-10">{social.icon}</span>
+                  {social.icon}
                 </motion.a>
               ))}
             </motion.div>
           </div>
 
-          {/* Image/Illustration - Glass Terminal */}
+          {/* Interactive Profile Card / Terminal Toggle */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -158,23 +163,24 @@ export default function Hero() {
             className="lg:w-1/2 flex justify-center"
             style={{ perspective: "1200px" }}
           >
-            <div className="relative w-[280px] xs:w-[320px] sm:w-[400px] md:w-full max-w-lg h-[300px] sm:h-[350px] md:h-[400px] flex items-center justify-center mt-20 md:mt-8 lg:mt-0 mx-auto">
+            <div className="relative w-[290px] xs:w-[340px] sm:w-[420px] max-w-lg h-[340px] sm:h-[400px] flex items-center justify-center mt-8 lg:mt-0 mx-auto">
+              
               <AnimatePresence mode="wait">
                 {showImage ? (
                   <motion.div
                     key="profile-image"
-                    initial={{ x: 100, opacity: 0, rotateY: -15 }}
+                    initial={{ x: 80, opacity: 0, rotateY: -15 }}
                     animate={{ x: 0, opacity: 1, rotateY: 0 }}
-                    exit={{ x: -100, opacity: 0, rotateY: 15 }}
+                    exit={{ x: -80, opacity: 0, rotateY: 15 }}
                     transition={{ duration: 0.6, type: "spring" }}
-                    className="absolute inset-0 w-full h-full rounded-2xl p-1.5 bg-gradient-to-tr from-cyan-500 to-purple-500 shadow-[0_0_40px_rgba(6,182,212,0.4)]"
+                    className="absolute inset-0 w-full h-full rounded-3xl p-1.5 bg-gradient-to-tr from-cyan-500 via-indigo-500 to-purple-500 shadow-[0_0_50px_rgba(6,182,212,0.35)] group"
                   >
-                    <div className="w-full h-full rounded-2xl overflow-hidden border-4 border-[#0f172a] bg-[#1e293b] relative">
+                    <div className="w-full h-full rounded-[22px] overflow-hidden border-4 border-slate-950 bg-slate-900 relative">
                       <Image 
                         src={myImage} 
                         alt="MD Shohanur Rahman" 
                         fill
-                        className="object-cover object-top"
+                        className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
                         sizes="(max-width: 768px) 100vw, 50vw"
                         priority
                       />
@@ -183,64 +189,70 @@ export default function Hero() {
                 ) : (
                   <motion.div
                     key="terminal"
-                    initial={{ x: 100, opacity: 0, rotateY: -15 }}
+                    initial={{ x: 80, opacity: 0, rotateY: -15 }}
                     animate={{ x: 0, opacity: 1, rotateY: 0 }}
-                    exit={{ x: -100, opacity: 0, rotateY: 15 }}
+                    exit={{ x: -80, opacity: 0, rotateY: 15 }}
                     transition={{ duration: 0.6, type: "spring" }}
                     className="absolute inset-0 w-full h-full"
                   >
-                    {/* Glow Behind Terminal */}
-                    <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-2xl blur opacity-30 animate-pulse"></div>
+                    {/* Glowing Terminal Frame */}
+                    <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-cyan-500 to-emerald-500 rounded-3xl blur-md opacity-40 animate-pulse"></div>
                     
-                    {/* Terminal Window */}
-                    <div className="relative w-full h-full glass-card border border-gray-700/50 rounded-2xl overflow-hidden shadow-2xl bg-[#0f172a]/80 backdrop-blur-xl flex flex-col">
+                    <div className="relative w-full h-full glass-card border border-slate-700/60 rounded-3xl overflow-hidden shadow-2xl bg-slate-950/90 backdrop-blur-2xl flex flex-col">
+                      
                       {/* Terminal Header */}
-                      <div className="px-4 py-3 border-b border-gray-700/50 bg-[#1e293b]/50 flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-                        <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                        <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
-                        <div className="ml-2 text-xs font-mono text-gray-400 flex-1 text-center pr-8">developer.js</div>
+                      <div className="px-5 py-3.5 border-b border-slate-800 bg-slate-900/80 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 rounded-full bg-rose-500/80"></div>
+                          <div className="w-3 h-3 rounded-full bg-amber-500/80"></div>
+                          <div className="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+                        </div>
+                        <div className="text-xs font-mono text-slate-400 flex items-center gap-1.5">
+                          <FiTerminal className="text-cyan-400" /> developer.ts
+                        </div>
+                        <div className="w-12"></div>
                       </div>
                       
                       {/* Terminal Body */}
-                      <div className="p-6 font-mono text-sm sm:text-base leading-relaxed overflow-y-auto flex-1">
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
-                          <span className="text-purple-400">const</span> <span className="text-cyan-400">developer</span> <span className="text-white">=</span> <span className="text-yellow-300">{`{`}</span>
-                        </motion.div>
+                      <div className="p-6 font-mono text-xs sm:text-sm leading-relaxed text-slate-300 overflow-y-auto flex-1">
+                        <div>
+                          <span className="text-purple-400 font-bold">const</span> <span className="text-cyan-400 font-bold">developer</span> <span className="text-white">=</span> <span className="text-amber-300">{`{`}</span>
+                        </div>
                         
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} className="ml-4">
-                          <span className="text-emerald-400">name</span><span className="text-white">:</span> <span className="text-orange-300">&quot;Shohanur Rahman&quot;</span><span className="text-white">,</span>
-                        </motion.div>
+                        <div className="ml-4 my-1">
+                          <span className="text-emerald-400">name</span><span className="text-white">:</span> <span className="text-orange-300">&quot;MD Shohanur Rahman&quot;</span><span className="text-white">,</span>
+                        </div>
 
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }} className="ml-4">
-                          <span className="text-emerald-400">skills</span><span className="text-white">:</span> <span className="text-purple-400">[</span>
-                          <span className="text-orange-300">&quot;React&quot;</span><span className="text-white">, </span>
+                        <div className="ml-4 my-1">
+                          <span className="text-emerald-400">role</span><span className="text-white">:</span> <span className="text-orange-300">&quot;Full-Stack Engineer&quot;</span><span className="text-white">,</span>
+                        </div>
+
+                        <div className="ml-4 my-1">
+                          <span className="text-emerald-400">stack</span><span className="text-white">:</span> <span className="text-purple-400">[</span>
                           <span className="text-orange-300">&quot;Next.js&quot;</span><span className="text-white">, </span>
+                          <span className="text-orange-300">&quot;React&quot;</span><span className="text-white">, </span>
                           <span className="text-orange-300">&quot;Node&quot;</span><span className="text-white">, </span>
                           <span className="text-orange-300">&quot;MongoDB&quot;</span>
                           <span className="text-purple-400">]</span><span className="text-white">,</span>
-                        </motion.div>
+                        </div>
 
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.0 }} className="ml-4">
-                          <span className="text-emerald-400">hardWorker</span><span className="text-white">:</span> <span className="text-cyan-400">true</span><span className="text-white">,</span>
-                        </motion.div>
+                        <div className="ml-4 my-1">
+                          <span className="text-emerald-400">codeChefRating</span><span className="text-white">:</span> <span className="text-amber-400 font-bold">&quot;2★ (1400+)&quot;</span><span className="text-white">,</span>
+                        </div>
 
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.5 }} className="ml-4">
-                          <span className="text-emerald-400">problemSolver</span><span className="text-white">:</span> <span className="text-cyan-400">true</span>
-                        </motion.div>
+                        <div className="ml-4 my-1">
+                          <span className="text-emerald-400">openForHire</span><span className="text-white">:</span> <span className="text-cyan-400 font-bold">true</span>
+                        </div>
 
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3.0 }}>
-                          <span className="text-yellow-300">{`}`}</span><span className="text-white">;</span>
-                        </motion.div>
+                        <div>
+                          <span className="text-amber-300">{`}`}</span><span className="text-white">;</span>
+                        </div>
                         
-                        <br />
-                        
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3.5 }}>
-                          <span className="text-cyan-400">developer</span><span className="text-white">.</span><span className="text-blue-400">buildAwesomeThings</span><span className="text-yellow-300">()</span><span className="text-white">;</span>
-                        </motion.div>
+                        <div className="mt-3">
+                          <span className="text-cyan-400">developer</span><span className="text-white">.</span><span className="text-blue-400">buildAwesomeApps</span><span className="text-amber-300">()</span><span className="text-white">;</span>
+                        </div>
 
                         <motion.div 
-                          initial={{ opacity: 0 }} 
                           animate={{ opacity: [0, 1, 0] }} 
                           transition={{ repeat: Infinity, duration: 1 }}
                           className="mt-2 w-2 h-4 bg-cyan-400"
@@ -253,23 +265,22 @@ export default function Hero() {
 
               {/* Floating Stat Badges */}
               <motion.div 
-                animate={{ y: [0, -10, 0] }}
-                transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
-                className="absolute -bottom-6 -left-6 glass-card p-4 rounded-xl border border-cyan-500/30 flex items-center gap-3 z-20"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+                className="absolute -bottom-5 -left-5 glass-card p-3.5 sm:p-4 rounded-2xl border border-cyan-500/40 flex items-center gap-3 z-30 shadow-[0_10px_30px_rgba(6,182,212,0.25)] bg-slate-900/90 backdrop-blur-xl"
               >
-                <div className="text-3xl font-bold text-cyan-400">2★</div>
-                <div className="text-xs text-gray-300 font-medium leading-tight">CodeChef<br/>Rating</div>
+                <div className="text-2xl sm:text-3xl font-extrabold text-cyan-400">2★</div>
+                <div className="text-xs text-slate-300 font-semibold leading-tight">CodeChef<br/>Rating</div>
               </motion.div>
 
               <motion.div 
-                animate={{ y: [0, 10, 0] }}
-                transition={{ repeat: Infinity, duration: 6, ease: "easeInOut", delay: 1 }}
-                className="absolute -top-6 -right-6 glass-card p-4 rounded-xl border border-purple-500/30 flex items-center gap-3 z-20"
+                animate={{ y: [0, 8, 0] }}
+                transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }}
+                className="absolute -top-5 -right-5 glass-card p-3.5 sm:p-4 rounded-2xl border border-purple-500/40 flex items-center gap-3 z-30 shadow-[0_10px_30px_rgba(139,92,246,0.25)] bg-slate-900/90 backdrop-blur-xl"
               >
-                <div className="text-3xl font-bold text-purple-400">15+</div>
-                <div className="text-xs text-gray-300 font-medium leading-tight">Projects<br/>Completed</div>
+                <div className="text-2xl sm:text-3xl font-extrabold text-purple-400">15+</div>
+                <div className="text-xs text-slate-300 font-semibold leading-tight">Full-Stack<br/>Projects</div>
               </motion.div>
-
 
             </div>
           </motion.div>

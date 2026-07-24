@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { FiMail, FiUser, FiMessageSquare, FiSend, FiGithub, FiLinkedin, FiFacebook, FiCheck, FiMapPin, FiPhone } from "react-icons/fi";
+import { FiMail, FiUser, FiMessageSquare, FiSend, FiGithub, FiLinkedin, FiFacebook, FiCheck, FiMapPin, FiInfo } from "react-icons/fi";
 import toast from "react-hot-toast";
 
 export default function Contact() {
@@ -24,46 +24,65 @@ export default function Contact() {
     const loadingToast = toast.loading("Sending your message...");
 
     try {
-      const res = await fetch("https://formsubmit.co/ajax/shohanur.rs.bd@gmail.com", {
+      // Send message to our resilient internal API route
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-          _subject: `New Portfolio Message from ${formData.name}`,
-          _template: "table",
-          _captcha: "false"
-        })
+        body: JSON.stringify(formData)
       });
 
       const responseData = await res.json();
       toast.dismiss(loadingToast);
 
-      if (res.ok || responseData.success === "true") {
+      if (res.ok && responseData.success) {
         setIsSubmitted(true);
-        toast.success("Thank you! Your message was sent directly to Shohanur's email.");
+        toast.success("Message sent! Check your Gmail inbox or spam folder.");
         setFormData({ name: "", email: "", message: "" });
         setTimeout(() => {
           setIsSubmitted(false);
-        }, 4000);
+        }, 5000);
       } else {
-        toast.error("Could not send email directly. Please try again or email directly.");
+        // Direct Client Fallback to FormSubmit AJAX
+        const fallbackRes = await fetch("https://formsubmit.co/ajax/shohanur.rs.bd@gmail.com", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+            _subject: `Portfolio Message from ${formData.name}`,
+            _template: "table",
+            _captcha: "false"
+          })
+        });
+
+        if (fallbackRes.ok) {
+          setIsSubmitted(true);
+          toast.success("Message sent successfully!");
+          setFormData({ name: "", email: "", message: "" });
+          setTimeout(() => {
+            setIsSubmitted(false);
+          }, 5000);
+        } else {
+          toast.error("Could not send email automatically. Please email directly to shohanur.rs.bd@gmail.com");
+        }
       }
     } catch (error) {
       console.error("Contact Form Error:", error);
       toast.dismiss(loadingToast);
-      toast.error("Failed to submit. Please try again later.");
+      toast.error("Network error. Please email directly to shohanur.rs.bd@gmail.com");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden">
+    <section id="contact" className="py-24 relative overflow-hidden bg-slate-950">
       {/* Background Orbs */}
       <div className="absolute top-1/3 left-10 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none" />
@@ -84,7 +103,7 @@ export default function Contact() {
           </h2>
           <div className="w-24 h-1.5 bg-gradient-to-r from-purple-600 via-cyan-500 to-emerald-400 mx-auto rounded-full mb-6"></div>
           <p className="max-w-xl mx-auto text-slate-400 text-base">
-            Have a project in mind, a question, or an opportunity? Send me a message and I&apos;ll respond to your email as soon as possible.
+            Have a project in mind, a job opportunity, or a question? Send me a message and I&apos;ll get back to your email inbox promptly.
           </p>
         </motion.div>
 
@@ -98,7 +117,7 @@ export default function Contact() {
             transition={{ duration: 0.6 }}
             className="lg:w-1/3 flex flex-col justify-between"
           >
-            <div className="glass-card p-8 rounded-3xl border border-slate-700/60 shadow-[0_10px_35px_rgba(139,92,246,0.12)] flex flex-col justify-between h-full">
+            <div className="glass-card p-8 rounded-3xl border border-slate-700/60 shadow-[0_10px_35px_rgba(139,92,246,0.12)] flex flex-col justify-between h-full bg-slate-900/60 backdrop-blur-xl">
               <div>
                 <h3 className="text-2xl font-bold text-white mb-4">Let&apos;s Connect</h3>
                 <p className="text-slate-300 text-sm leading-relaxed mb-8">
@@ -129,6 +148,14 @@ export default function Contact() {
                       <p className="text-white font-semibold text-sm">Dhaka, Bangladesh</p>
                     </div>
                   </div>
+                </div>
+
+                {/* Important Tip Notice */}
+                <div className="mt-8 p-4 rounded-2xl bg-slate-800/40 border border-cyan-500/20 flex gap-3 items-start text-xs text-slate-300">
+                  <FiInfo className="text-cyan-400 text-lg flex-shrink-0 mt-0.5" />
+                  <p>
+                    <strong>Note:</strong> Messages are routed directly to <span className="text-cyan-300 font-mono">shohanur.rs.bd@gmail.com</span>. Check Spam/Promotions folder if testing for the first time.
+                  </p>
                 </div>
               </div>
 
@@ -180,7 +207,7 @@ export default function Contact() {
           >
             <form 
               onSubmit={handleSubmit}
-              className="glass-card p-8 sm:p-10 rounded-3xl border border-slate-700/60 shadow-[0_10px_35px_rgba(6,182,212,0.12)] flex flex-col gap-6"
+              className="glass-card p-8 sm:p-10 rounded-3xl border border-slate-700/60 shadow-[0_10px_35px_rgba(6,182,212,0.12)] flex flex-col gap-6 bg-slate-900/60 backdrop-blur-xl"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="relative">

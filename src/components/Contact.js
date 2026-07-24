@@ -149,14 +149,6 @@ export default function Contact() {
                     </div>
                   </div>
                 </div>
-
-                {/* Important Tip Notice */}
-                <div className="mt-8 p-4 rounded-2xl bg-slate-800/40 border border-cyan-500/20 flex gap-3 items-start text-xs text-slate-300">
-                  <FiInfo className="text-cyan-400 text-lg flex-shrink-0 mt-0.5" />
-                  <p>
-                    <strong>Note:</strong> Messages are routed directly to <span className="text-cyan-300 font-mono">shohanur.rs.bd@gmail.com</span>. Check Spam/Promotions folder if testing for the first time.
-                  </p>
-                </div>
               </div>
 
               {/* Social Profiles */}

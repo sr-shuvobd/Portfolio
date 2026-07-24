@@ -38,7 +38,7 @@ export default function Contact() {
 
       if (res.ok && responseData.success) {
         setIsSubmitted(true);
-        toast.success("Message sent! Check your Gmail inbox or spam folder.");
+        toast.success("Thank you! Your message has been sent. I will get in touch with you shortly!");
         setFormData({ name: "", email: "", message: "" });
         setTimeout(() => {
           setIsSubmitted(false);
@@ -266,7 +266,7 @@ export default function Contact() {
                   ) : isSubmitted ? (
                     <>
                       <FiCheck className="text-lg text-emerald-300" />
-                      Message Sent Directly to Gmail!
+                      Thank You! Message Sent Successfully
                     </>
                   ) : (
                     <>

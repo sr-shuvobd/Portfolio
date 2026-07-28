@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiGithub, FiLinkedin, FiFacebook, FiMail, FiArrowDownRight, FiCode, FiTerminal } from "react-icons/fi";
+import { FiGithub, FiLinkedin, FiFacebook, FiMail, FiArrowDownRight, FiCode, FiTerminal, FiDownload } from "react-icons/fi";
 import Image from "next/image";
 import myImage from "@/assets/my.jpeg";
 
@@ -115,6 +115,18 @@ export default function Hero() {
                 className="px-8 py-3.5 rounded-full bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 text-white font-semibold text-sm shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:shadow-[0_0_35px_rgba(139,92,246,0.6)] transition-all flex items-center gap-2"
               >
                 View Projects <FiArrowDownRight className="text-lg" />
+              </motion.a>
+
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href="/MD_Shohanur_Rahman_Resume.pdf"
+                download="MD_Shohanur_Rahman_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-3.5 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 font-bold text-sm shadow-[0_0_25px_rgba(16,185,129,0.35)] hover:shadow-[0_0_35px_rgba(6,182,212,0.6)] transition-all flex items-center gap-2"
+              >
+                <FiDownload className="text-lg" /> Download Resume
               </motion.a>
 
               <motion.a

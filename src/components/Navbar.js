@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiMenu, FiX } from "react-icons/fi";
+import { FiMenu, FiX, FiDownload } from "react-icons/fi";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -54,7 +54,7 @@ export default function Navbar() {
       <div 
         className={`flex items-center justify-between transition-all duration-500 ${
           scrolled 
-            ? "w-[90%] max-w-4xl glass-card rounded-full px-6 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.3)] border-slate-700/50 bg-[#0f172a]/70 backdrop-blur-xl" 
+            ? "w-[90%] max-w-5xl glass-card rounded-full px-6 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.3)] border-slate-700/50 bg-[#0f172a]/70 backdrop-blur-xl" 
             : "w-full container mx-auto px-6 md:px-12 py-2"
         }`}
       >
@@ -94,10 +94,29 @@ export default function Navbar() {
               </Link>
             );
           })}
+
+          <a
+            href="/MD_Shohanur_Rahman_Resume.pdf"
+            download="MD_Shohanur_Rahman_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-2 flex items-center gap-1.5 px-4 py-1.5 text-xs font-bold text-cyan-400 border border-cyan-500/40 rounded-full bg-cyan-950/40 hover:bg-cyan-500/20 hover:border-cyan-400 hover:text-white transition-all shadow-[0_0_10px_rgba(6,182,212,0.2)]"
+          >
+            <FiDownload size={14} /> Resume
+          </a>
         </nav>
 
         {/* Mobile Menu Toggle */}
-        <div className="md:hidden">
+        <div className="md:hidden flex items-center gap-3">
+          <a
+            href="/MD_Shohanur_Rahman_Resume.pdf"
+            download="MD_Shohanur_Rahman_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 px-3 py-1 text-xs font-bold text-cyan-400 border border-cyan-500/40 rounded-full bg-cyan-950/40"
+          >
+            <FiDownload size={13} /> Resume
+          </a>
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="text-slate-300 hover:text-white focus:outline-none"
@@ -136,6 +155,17 @@ export default function Navbar() {
                 </Link>
               );
             })}
+
+            <a
+              href="/MD_Shohanur_Rahman_Resume.pdf"
+              download="MD_Shohanur_Rahman_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center justify-center gap-2 text-base font-bold px-6 py-2.5 rounded-full w-3/4 text-center transition-all bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 shadow-[0_0_20px_rgba(6,182,212,0.4)]"
+            >
+              <FiDownload size={18} /> Download Resume
+            </a>
           </motion.div>
         )}
       </AnimatePresence>

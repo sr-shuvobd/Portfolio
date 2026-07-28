@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { FiCode, FiDatabase, FiAward, FiCpu, FiCheckCircle } from "react-icons/fi";
+import { FiCode, FiDatabase, FiAward, FiCpu, FiCheckCircle, FiDownload } from "react-icons/fi";
 
 const highlights = [
   {
@@ -98,7 +98,7 @@ export default function About() {
                 </p>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-slate-800/80 flex items-center justify-between">
+              <div className="mt-8 pt-6 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-4">
                 <div>
                   <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Primary Stack</p>
                   <p className="text-white font-bold text-sm">MERN + Next.js App Router</p>
@@ -109,6 +109,17 @@ export default function About() {
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Available for Hire
                   </p>
                 </div>
+                <motion.a
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  href="/MD_Shohanur_Rahman_Resume.pdf"
+                  download="MD_Shohanur_Rahman_Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan-500/20 to-emerald-500/20 hover:from-cyan-500/30 hover:to-emerald-500/30 border border-cyan-500/40 text-cyan-300 font-semibold text-xs flex items-center gap-2 transition-all shadow-[0_0_15px_rgba(6,182,212,0.15)]"
+                >
+                  <FiDownload size={15} /> Download Resume
+                </motion.a>
               </div>
             </div>
           </motion.div>
